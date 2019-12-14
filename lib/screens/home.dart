@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../models/Locations.dart';
+import '../models/User.dart';
 class HomeScreen extends StatefulWidget {
+  final User user;
+  HomeScreen(this.user);
   @override
   State<HomeScreen> createState() {
     return _HomeScreenState();

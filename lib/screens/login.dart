@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import '../models/Locations.dart';
+
+import '../models/User.dart';
+import './home.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -14,20 +15,14 @@ class LoginScreenState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
 
   void authenticate() async {
-    Map<String, String> userBody = {
-      "uname": userNameController.text,
-      "password": passwordController.text,
-    };
-    var res =
-        await http.post("http://10.100.100.243:3000/login", body: userBody);
-    var resBody = jsonDecode(res.body);
-    if (res.statusCode == 200) {
-      print("succes");
-      print(context);
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => AfterLogin(resBody)));
-    } else {
-      print("Invalid");
+
+      var uname =  userNameController.text;
+      var password =  passwordController.text;
+
+    try {
+      User user = await User.login(uname, password);
+      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> HomeScreen(user)));
+    } catch (e) {
     }
   }
 
